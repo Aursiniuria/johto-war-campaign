@@ -24,6 +24,14 @@ def get_tags(stats):
         return ["Quest Card"]
     elif stats.image_type == "Utility":
         return ["Utility Card"]
+    elif stats.utility_type == "PRIZE GAMBLE CARD":
+        return ["Prize Gamble Card"]
+    elif stats.utility_type == "ADDITIVE GAMBLE CARD":
+        return ["Additive Gamble Card"]
+    elif stats.utility_type == "MULTIPLY GAMBLE CARD":
+        return ["Multiplicative Gamble Card"]
+    elif stats.utility_type == "BETTING GAMBLE CARD":
+        return ["Bet Gamble Card"]
     else:
         return []
 
@@ -44,6 +52,10 @@ def get_lua_script(stats):
         'internal_name': f'"{stats.internal_name}"'
     }
     lua_script_lines = [f'{variable} = {value}' for variable, value in local_variables.items()]
+
+    if not pd.isnull(stats.lua):
+        lua_script_lines.append(stats.lua)
+
     return '\n'.join(lua_script_lines)
 
 def get_card_json(deck_json, i, j, stats, is_evolution=False):
@@ -82,7 +94,7 @@ def add_card_to_deck(deck_json, i, j, k, stats):
         deck_json['ObjectStates'][0]['ContainedObjects'][-(k + 1)]['States'][int(stats.state)] = card_json
 
 def run():
-    possible_image_types = ["Excavated", "Disaster", "Fortune", "Influence", "Sunken", "Utility"]
+    possible_image_types = ["Excavated", "Disaster", "Fortune", "Influence", "Sunken", "Utility", "Gamble"]
     for image_type_filter in possible_image_types:
         print(f'Generating {image_type_filter} deck object')
         DECK_OBJECT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

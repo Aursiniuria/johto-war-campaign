@@ -29,6 +29,15 @@ def get_lua_table_from_field(field):
     return 'nil'
 
 
+def get_lua_script(stats):
+    local_variables = {
+        'move_type': f'"{stats.move_type.capitalize()}"',
+        'move_type2': f'"{stats.move_type2.capitalize()}"',
+    }
+    lua_script_lines = [f'{variable} = {value}' for variable, value in local_variables.items()]
+    return '\n'.join(lua_script_lines)
+
+
 def get_card_json(deck_json, i, j, stats, is_evolution=False):
     with open(CARD_OBJECT_TEMPLATE) as f:
         card_json = json.load(f)
@@ -36,6 +45,7 @@ def get_card_json(deck_json, i, j, stats, is_evolution=False):
     card_json['CardID'] = j * 100 + i
     card_json['Nickname'] = stats.ability_name
     card_json['Tags'] = get_tags(stats)
+    card_json['LuaScript'] = get_lua_script(stats)
     card_json['Hands'] = True
     card_json['HideWhenFaceDown'] = True
     card_json['CustomDeck'][str(j)] = {

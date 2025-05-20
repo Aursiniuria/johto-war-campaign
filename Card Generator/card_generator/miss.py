@@ -232,25 +232,8 @@ def run():
         base_deck_json = json.load(f)
 
     deck_definitions = [
-        {"name": "Weak Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "weak" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Starter Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "starter" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Shiny Weak Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.encounter_tier == "weak" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Moderate Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "moderate" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Shiny Moderate Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.encounter_tier == "moderate" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Strong Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "strong" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Shiny Strong Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.encounter_tier == "strong" and pd.isna(stats.trainer) and stats.climate != "Fossil" and stats.evo_only == 0},
-        {"name": "Quest Legendary Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "legendary" and pd.isna(stats.trainer) and stats.evo_only == 0},
-        {"name": "Shiny Quest Legendary Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.encounter_tier == "legendary" and pd.isna(stats.trainer) and stats.evo_only == 0},
-        {"name": "Warp Legendary Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.encounter_tier == "warp" and pd.isna(stats.trainer) and stats.evo_only == 0},
-        {"name": "Shiny Warp Legendary Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.encounter_tier == "warp" and pd.isna(stats.trainer) and stats.evo_only == 0},
         {"name": "Rocket Pokemon Deck", "filter": lambda stats: stats.trainer == "Rocket Grunt" or stats.trainer == "Rocket Ace"},
-        {"name": "Plasma Pokemon Deck", "filter": lambda stats: stats.trainer == "Plasma Grunt" or stats.trainer == "Plasma Ace"},
-        {"name": "Fossil Pokemon Deck", "filter": lambda stats: stats.is_shiny == 0 and stats.climate == "Fossil" and stats.evo_only == 0},
-        {"name": "Shiny Fossil Pokemon Deck", "filter": lambda stats: stats.is_shiny == 1 and stats.climate == "Fossil" and stats.evo_only == 0},
-        {"name": "Gym Pokemon Deck", "filter": lambda stats: stats.trainer in ["Falkner", "Bugsy", "Whitney", "Morty", "Chuck", "Jasmine", "Pryce", "Clair"]},
-        {"name": "Boss Pokemon Deck", "filter": lambda stats: stats.trainer in ["Proton", "Ariana", "Archer", "Giovanni", "Juan", "Sidney", "Flannery", "Norman", "Wattson", "Winona", "Darach", "Argenta", "Palmer", "Thorton", "Dahlia", "Caitlin", "Queen", "Lance", "Koga", "Bruno", "Karen", "Will", "Cyrus", "Mars", "Jupiter", "Saturn", "Sird", "Charon"]},
-        {"name": "Event Pokemon Deck", "filter": lambda stats: stats.trainer in ["Colress", "Zinnia"] or (stats.is_shiny == 1 and stats.encounter_tier == "strong" and pd.isna(stats.trainer) and stats.internal_name != "Shiny Armaldo" and (stats.type_1 == "Bug" or stats.type_2 == "Bug"))},
-        {"name": "Evolution Pokemon Deck", "filter": lambda stats: stats.evo_only == 1 or stats.number_in_deck > 1}
+        {"name": "Plasma Pokemon Deck", "filter": lambda stats: stats.trainer == "Plasma Grunt" or stats.trainer == "Plasma Ace"}
     ]
 
     for deck_definition in deck_definitions:

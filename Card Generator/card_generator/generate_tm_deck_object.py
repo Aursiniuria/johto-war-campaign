@@ -7,9 +7,11 @@ def get_tags(stats):
     tags_map = {
         "weak": ["TM Weak", "Held Item"],
         "moderate": ["TM Moderate", "Held Item"],
-        "strong": ["TM Strong", "Held Item"]
+        "strong": ["TM Strong", "Held Item"],
+        "Plasma Card": ["Held Item"],
+        "Shadow": ["Held Item"]
     }
-    return tags_map.get(stats.move_tier.lower(), [])
+    return tags_map.get(stats.move_tier, [])
 
 def get_lua_table_from_fields(fields):
     values_list = [f'"{value.capitalize()}"' for value in fields if not pd.isnull(value)]
@@ -36,7 +38,7 @@ def get_card_json(deck_json, i, j, stats, is_evolution=False):
         'BackURL': deck_json['ObjectStates'][0]['CustomDeck'][str(j)]['BackURL'],
         'NumWidth': 10,
         'NumHeight': 7,
-        'BackIsHidden': True,
+        'HideWhenFaceDown': False,
         'Hands': True,
         'UniqueBack': True,
         'Type': 0
@@ -56,7 +58,7 @@ def add_card_to_deck(deck_json, i, j, k, stats):
         deck_json['ObjectStates'][0]['ContainedObjects'][-(k + 1)]['States'][str(stats.state)] = card_json
 
 def run():
-    possible_move_tiers = ["weak", "moderate", "strong"]
+    possible_move_tiers = ["weak", "moderate", "strong", "Plasma Card", "Shadow"]
     for move_tier_filter in possible_move_tiers:
         print(f'Generating {move_tier_filter} deck object:')
         DECK_OBJECT_OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -72,13 +74,13 @@ def run():
         df = df[df['move_tier'] == move_tier_filter]
 
         for _, stats in df.iterrows():
-            if stats.move_type == "blank":
+            if stats.move_type == "blank" and stats.move_tier == "blank":
                 continue
             if (i == 0 and j == 0) or i == 70:
                 deck_json['ObjectStates'][0]['CustomDeck'][str(j + 1)] = {
                     'NumWidth': 10,
                     'NumHeight': 7,
-                    'BackIsHidden': True,
+                    'BackIsHidden': False,
                     'Hands': True,
                     'UniqueBack': True,
                     'Type': 0

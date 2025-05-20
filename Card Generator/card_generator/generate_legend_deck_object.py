@@ -36,6 +36,8 @@ def get_card_json(deck_json, i, j, stats, is_evolution=False):
     card_json['Nickname'] = stats.card_name
     card_json['Description'] = stats.classification
     card_json['Tags'] = get_tags(stats)
+    if not pd.isnull(stats.lua):
+        card_json['LuaScript'] = stats.lua
     card_json['Hands'] = True
     card_json['HideWhenFaceDown'] = True
     card_json['CustomDeck'][str(j)] = {

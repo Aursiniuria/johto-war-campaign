@@ -78,14 +78,21 @@ def generate_card_backs(overwrite):
 
     df = read_cube(sheet_name='others')
     for _, stats in tqdm(df.iterrows(), total=df.shape[0]):
-        directory_name = stats.image_type if stats.image_type != "Warp" else "Shrine"
+        if stats.image_type != "Warp":
+            directory_name = stats.image_type
+        else:
+            directory_name = "Shrine"
         output_dir = (OUTPUT_DIR / directory_name / 'card_backs')
         output_dir.mkdir(parents=True, exist_ok=True)
         output_path = output_dir / f'{stats.utility_name}.png'
         if output_path.is_file() and not overwrite:
             continue
 
-        img = get_img(CARD_ASSETS_DIR / 'card_backs' / f'{stats.image_type}.png', xy(16, 28))
+        if stats.image_type != "Gamble":
+            backimage = stats.image_type
+        else:
+            backimage = stats.utility_type
+        img = get_img(CARD_ASSETS_DIR / 'card_backs' / f'{backimage}.png', xy(16, 28))
         img.save(output_path)
 #
 # Entry

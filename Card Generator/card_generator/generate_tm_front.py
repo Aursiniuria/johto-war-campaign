@@ -15,9 +15,9 @@ from utils import xy, read_cube, get_img, text_font, title_font, wrapped_text
 
 
 def compose_base(stats):
-    if stats.move_tier == "Plasma Move":
+    if stats.move_tier == "Plasma Card" and stats.move_attack_strength != "blank":
         card_base = 'Plasma Move'
-    elif stats.move_tier == "Plasma Ability":
+    elif stats.move_tier == "Plasma Card":
         card_base = 'Plasma Ability'
     elif stats.move_type == "shadow":
         card_base = 'Shadow'
@@ -81,7 +81,7 @@ def generate_card_backs(overwrite=True):
     for i, stats in tqdm(df.iterrows(), total=df.shape[0]):
         if stats.move_tier in ["blank"]:
             continue
-        output_path = TM_BACKS_OUTPUT_DIR / f'{stats.move_name.lower()}.png'
+        output_path = TM_BACKS_OUTPUT_DIR / f'{stats.move_tier}_{stats.move_name.lower()}.png'
         if output_path.is_file() and not overwrite:
             continue
 
@@ -100,7 +100,7 @@ def run(overwrite=True):
     for i, stats in tqdm(df.iterrows(), total=df.shape[0]):
         if stats.move_tier in ["blank"]:
             continue
-        output_path = TM_FRONTS_OUTPUT_DIR / f'{stats.move_name.lower()}.png'
+        output_path = TM_FRONTS_OUTPUT_DIR / f'{stats.move_tier}_{stats.move_name.lower()}.png'
         if output_path.is_file() and not overwrite:
             continue
 

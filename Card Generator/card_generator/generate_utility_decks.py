@@ -13,7 +13,7 @@ def add_card_at_pos(base_img, pokemon_card_path, position):
     return base_img
 
 def run():
-    possible_image_types = ["Excavated", "Disaster", "Fortune", "Influence", "Sunken", "Utility", "Warp"]
+    possible_image_types = ["Excavated", "Disaster", "Fortune", "Influence", "Sunken", "Utility", "Gamble"]
     for image_type_filter in possible_image_types:
         print(f'Generating {image_type_filter} decks:')
 

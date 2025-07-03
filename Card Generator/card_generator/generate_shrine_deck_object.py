@@ -41,6 +41,7 @@ def get_card_json(deck_json, i, j, stats, is_evolution=False):
         'BackURL': deck_json['ObjectStates'][0]['CustomDeck'][str(j)]['BackURL'],
         'NumWidth': 10,
         'NumHeight': 7,
+        'HideWhenFaceDown': False,
         'BackIsHidden': True,
         'Hands': True,
         'UniqueBack': True,

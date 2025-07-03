@@ -29,9 +29,9 @@ def compose_base(stats):
 
 
 def compose_back(stats):
-    if stats.move_tier == "Plasma Move":
+    if stats.move_tier == "Plasma Card" and stats.move_attack_strength != "blank":
         card_base = 'Plasma Move'
-    elif stats.move_tier == "Plasma Ability":
+    elif stats.move_tier == "Plasma Card":
         card_base = 'Plasma Ability'
     elif stats.move_type == "shadow":
         card_base = 'Shadow'
@@ -47,7 +47,7 @@ def add_move(img, stats):
         img.paste(move_img, xy(0.75, 19.75), move_img)
 
 def add_back_move(img, stats):
-    if stats.move_tier not in ["blank", "Plasma Move", "Plasma Ability"] and stats.move_type not in ["shadow"]:
+    if stats.move_tier not in ["blank", "Plasma Card"] and stats.move_type not in ["shadow"]:
         move_img = get_img(TM_MOVES_OUTPUT_DIR / f'{stats.move_name}.png', xy(14.5, 7.5))
         img.paste(move_img, xy(0.75, 19.75), move_img)
 
@@ -59,6 +59,11 @@ def add_emblem(img, stats):
         emblem_name = 'custom'
     emblem_img = get_img(CARD_ASSETS_DIR / 'emblems' / f'{emblem_name}.png', xy(0.5, 0.5))
     img.paste(emblem_img, xy(15, 27), emblem_img)
+
+def add_encounter(img, stats):
+    if stats.move_tier in ["weak", "moderate", "strong"]:
+        emblem_img = get_img(CARD_ASSETS_DIR / 'encounter_icons' / f'{stats.move_tier}.png', xy(0.825, 0.825))
+        img.paste(emblem_img, xy(0.25, 26.95), emblem_img)
 
 def add_back_emblem(img, stats):   
     if stats.move_tier not in ["blank", "Plasma Move", "Plasma Ability"] and stats.move_type not in ["shadow"]:
@@ -107,6 +112,7 @@ def run(overwrite=True):
         img = compose_base(stats)
         add_move(img, stats)
         add_emblem(img, stats)
+        add_encounter(img, stats)
 
         # base_img.paste(img, xy(0, 0), img)
         img.save(output_path)
